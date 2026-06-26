@@ -1,25 +1,29 @@
 # OTOS Continuity™ Microsite
 
-Static PMOS-style education-series microsite for OTOS Continuity™.
+PMOS-style contents-first education-series microsite for OTOS Continuity™.
 
-## Current pass
+## Structure
 
-Whole-site visual / UX refinement pass before copy or final imagery.
+- `index.html` — contents page plus separate reading state with 14 modules.
+- `styles.css` — stripped-back PMOS-style visual system with restrained OTOS amber/thread accents.
+- `script.js` — contents/reader state switching, smooth module navigation, active chapter tracking, reduced-motion support.
+- `assets/` — OTOS Continuity™ logo assets.
 
-Implemented:
+## Current pass completed
 
-- Contents-first homepage remains the entry state.
-- Homepage title reduced and line-broken as: “The thread / the system / keeps missing.”
-- Header refined to quiet PMOS-style layout: OTOS mark left, series title centre, Contents right.
-- Reading state remains separate from the contents state.
-- Horizontal numbered chapter navigation remains clickable and active-state aware.
-- Visual language stripped back toward warm cream, charcoal type, restrained amber/thread accent.
-- Cocoon module upgraded as the central visual explanation.
-- Medication timing module upgraded as a signature visual moment using abstract thread/placeholders only.
-- Evidence, public-record, route-advice and governed-test modules given distinct formal visual treatments.
-- Hold-back module kept deliberately gated.
-- Final module moved to calmer dawn/route treatment.
-- Mobile and reduced-motion support retained.
+Whole-site UX / visual / interaction refinement pass for the current live microsite:
+
+- Refined contents-first homepage composition.
+- Reduced header/logo dominance and kept the PMOS-style header: logo left, series title centre, Contents right.
+- Preserved separate reading state rather than a pasted continuous page.
+- Refined horizontal numbered chapter navigation with active states.
+- Strengthened Module 04 as the person-centred continuity cocoon diagram.
+- Strengthened Module 06 as an abstract medication-timing visual moment.
+- Made Modules 07–08 more screenshot-able as definition/boundary modules.
+- Made Modules 09–12 more formal, careful and buyer-safe.
+- Made Module 13 feel gated/held back.
+- Made Module 14 calmer and more earned.
+- Removed duplicated CSS from previous pass and rebuilt a cleaner single visual system.
 
 ## Run locally
 
@@ -34,10 +38,14 @@ Open:
 http://localhost:8000
 ```
 
-## Files
+## Test anchors
 
-- `index.html`
-- `styles.css`
-- `script.js`
-- `assets/otos-continuity-logo-cropped.png`
-- `assets/otos-continuity-logo.png`
+- `/` opens the contents page.
+- `#contents` returns to contents.
+- `#module-01` enters reading mode at Module 01.
+- `#module-04` enters reading mode at the cocoon module.
+- Chapter navigation scrolls horizontally on small screens.
+
+## Notes
+
+No copy rewrite, new claims, final photography, partner logos, NHS logos, pills, bottle imagery, molecule imagery or product-mechanics disclosure were added in this pass.
