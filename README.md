@@ -46,3 +46,16 @@ http://localhost:8000
 - OTOS does not create a merged EPR or service-to-service data-sharing layer.
 - Comparator evidence is not presented as OTOS outcomes.
 - Public-record first-mover language remains qualified.
+
+## Static Background + Scrolling Glass Pass
+
+This pass keeps the five-module PMOS-style education structure and adds a persistent static OTOS atmosphere layer behind the reading experience. The reader now scrolls over restrained frosted editorial panels. Module-specific background states are controlled through `body[data-active-module]` and update as the chapter navigation state changes.
+
+Implemented states:
+- Module 01: faint tangled linework and first amber thread separation.
+- Module 02: steadier thread with medication timing atmosphere retained inside the subsection.
+- Module 03: abstract ADHD Lens / aperture treatment, explicitly non-surveillance.
+- Module 04: dual-panel / dual-lens background field.
+- Module 05: cocoon, hold-back, and dawn-route visual states inside integrated practice.
+
+No copy changes, new claims, photography, stock imagery, logos, pills, molecules, dashboards, or service-to-service network visuals were added.

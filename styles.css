@@ -1877,3 +1877,437 @@ li { margin: .58rem 0; color: inherit; line-height: 1.48; }
   .medication-panel .stable-thread { left: -18%; right: -32%; top: 46%; }
   .dual-panel { padding: 1.25rem; }
 }
+
+/* --------------------------------------------------------------------------
+   Static OTOS atmosphere + scrolling editorial glass pass
+   -------------------------------------------------------------------------- */
+main { position: relative; z-index: 2; }
+.static-atmosphere {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 16% 18%, rgba(255,255,255,.48), transparent 32%),
+    radial-gradient(circle at 84% 10%, rgba(236,122,36,.045), transparent 28%),
+    linear-gradient(180deg, #f8eedf 0%, #f1e3cf 54%, #f7eddd 100%);
+  transition: background 900ms ease, filter 900ms ease;
+}
+.static-atmosphere::before,
+.static-atmosphere::after {
+  content: "";
+  position: absolute;
+  inset: -8%;
+  opacity: .18;
+  transition: opacity 900ms ease, transform 900ms ease, background 900ms ease;
+}
+.static-atmosphere::before {
+  background-image:
+    radial-gradient(circle at 2px 2px, rgba(33,25,18,.105) 1px, transparent 1.45px),
+    linear-gradient(112deg, transparent 0 38%, rgba(236,122,36,.095) 46%, transparent 58%);
+  background-size: 34px 34px, 100% 100%;
+  transform: rotate(-.7deg) scale(1.02);
+}
+.static-atmosphere::after {
+  background:
+    radial-gradient(ellipse at 56% 48%, rgba(255,249,237,.34), transparent 20%),
+    radial-gradient(ellipse at 56% 48%, rgba(236,122,36,.075), transparent 38%),
+    linear-gradient(90deg, transparent, rgba(236,122,36,.055), transparent);
+  opacity: .32;
+}
+.atmo-thread,
+.atmo-lens,
+.atmo-cocoon,
+.atmo-route {
+  position: absolute;
+  display: block;
+  transition: opacity 900ms ease, transform 900ms ease, width 900ms ease, height 900ms ease, border-color 900ms ease;
+}
+.atmo-thread {
+  left: -12vw;
+  right: -12vw;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 7%, rgba(33,25,18,.12) 18%, rgba(236,122,36,.19) 48%, rgba(245,178,31,.14) 68%, transparent 92%);
+  box-shadow: 0 0 28px rgba(236,122,36,.10);
+  opacity: .22;
+  transform-origin: center;
+}
+.atmo-thread-a { top: 40%; transform: rotate(-7deg); }
+.atmo-thread-b { top: 62%; transform: rotate(4deg); opacity: .10; }
+.atmo-lens {
+  left: 49%;
+  top: 46%;
+  width: min(680px, 58vw);
+  height: min(280px, 24vw);
+  border: 1px solid rgba(236,122,36,.10);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(-6deg) scale(.9);
+  opacity: .10;
+  box-shadow: inset 0 0 70px rgba(236,122,36,.045), 0 0 70px rgba(245,178,31,.035);
+}
+.atmo-cocoon {
+  left: 50%;
+  top: 48%;
+  width: min(430px, 38vw);
+  height: min(520px, 46vw);
+  border: 1px solid rgba(236,122,36,.10);
+  border-radius: 48% 52% 46% 54% / 56% 44% 58% 42%;
+  transform: translate(-50%, -50%) scale(.78);
+  opacity: .08;
+  background: radial-gradient(ellipse at 50% 50%, rgba(245,178,31,.045), transparent 65%);
+}
+.atmo-route {
+  left: 8vw;
+  right: -16vw;
+  bottom: 18vh;
+  height: 2px;
+  opacity: .08;
+  transform: rotate(-5deg);
+  background: linear-gradient(90deg, transparent 0 8%, rgba(236,122,36,.18) 20%, rgba(245,178,31,.18) 62%, rgba(255,249,237,.38) 82%, transparent 100%);
+  box-shadow: 0 0 36px rgba(245,178,31,.12);
+}
+body[data-mode="contents"] .static-atmosphere {
+  background:
+    radial-gradient(circle at 16% 18%, rgba(255,255,255,.46), transparent 32%),
+    radial-gradient(circle at 86% 14%, rgba(236,122,36,.038), transparent 28%),
+    linear-gradient(180deg, #f8eddd 0%, #f1e2cd 100%);
+}
+body[data-mode="reader"][data-active-module="module-01"] .static-atmosphere::before {
+  opacity: .22;
+  background-image:
+    radial-gradient(circle at 2px 2px, rgba(33,25,18,.07) 1px, transparent 1.45px),
+    repeating-linear-gradient(116deg, transparent 0 23px, rgba(33,25,18,.035) 24px 25px, transparent 26px 54px),
+    linear-gradient(112deg, transparent 0 38%, rgba(236,122,36,.11) 47%, transparent 60%);
+}
+body[data-mode="reader"][data-active-module="module-01"] .atmo-thread-a {
+  opacity: .32;
+  transform: rotate(-9deg) translateY(-2vh);
+}
+body[data-mode="reader"][data-active-module="module-02"] .static-atmosphere {
+  background:
+    radial-gradient(circle at 78% 48%, rgba(245,178,31,.16), transparent 31%),
+    radial-gradient(circle at 12% 18%, rgba(20,15,11,.045), transparent 28%),
+    linear-gradient(105deg, #f7ead8 0%, #f1e1ca 52%, #f5dfb7 100%);
+}
+body[data-mode="reader"][data-active-module="module-02"] .atmo-thread-a {
+  opacity: .42;
+  transform: rotate(-4deg) translateY(2vh);
+  background: linear-gradient(90deg, transparent 6%, rgba(33,25,18,.08), rgba(236,122,36,.30) 50%, rgba(245,178,31,.32) 74%, transparent 94%);
+}
+body[data-mode="reader"][data-active-module="module-02"] .atmo-cocoon { opacity: .035; }
+body[data-mode="reader"][data-active-module="module-03"] .static-atmosphere {
+  background:
+    radial-gradient(ellipse at 50% 44%, rgba(236,122,36,.10), transparent 34%),
+    radial-gradient(circle at 80% 14%, rgba(255,255,255,.36), transparent 22%),
+    linear-gradient(180deg, #f8eddd 0%, #f0dfc7 100%);
+}
+body[data-mode="reader"][data-active-module="module-03"] .atmo-lens {
+  opacity: .34;
+  transform: translate(-50%, -50%) rotate(-4deg) scale(1.02);
+  border-color: rgba(236,122,36,.20);
+}
+body[data-mode="reader"][data-active-module="module-03"] .atmo-thread-a {
+  opacity: .34;
+  transform: rotate(-3deg) translateY(-1vh);
+}
+body[data-mode="reader"][data-active-module="module-04"] .static-atmosphere {
+  background:
+    linear-gradient(90deg, rgba(255,249,237,.42), rgba(236,122,36,.045) 49%, rgba(33,25,18,.035) 50%, rgba(255,249,237,.48)),
+    linear-gradient(180deg, #f8eddd, #f0dfc7);
+}
+body[data-mode="reader"][data-active-module="module-04"] .static-atmosphere::after {
+  opacity: .26;
+  background:
+    radial-gradient(ellipse at 34% 48%, rgba(33,25,18,.055), transparent 30%),
+    radial-gradient(ellipse at 66% 48%, rgba(236,122,36,.075), transparent 32%);
+}
+body[data-mode="reader"][data-active-module="module-05"] .static-atmosphere {
+  background:
+    radial-gradient(ellipse at 50% 43%, rgba(245,178,31,.12), transparent 28%),
+    radial-gradient(circle at 72% 82%, rgba(255,255,255,.42), transparent 32%),
+    linear-gradient(180deg, #f8eddd 0%, #f2dfbf 58%, #f7ead6 100%);
+}
+body[data-mode="reader"][data-active-module="module-05"] .atmo-cocoon {
+  opacity: .28;
+  transform: translate(-50%, -50%) scale(1);
+  border-color: rgba(236,122,36,.20);
+}
+body[data-mode="reader"][data-active-module="module-05"] .atmo-route { opacity: .24; }
+body[data-mode="reader"][data-active-module="module-05"] .atmo-thread-a { opacity: .36; transform: rotate(-5deg) translateY(1vh); }
+
+/* Let the static field sit behind the reader; panels do the reading work. */
+.reader-page {
+  background: transparent !important;
+  position: relative;
+  z-index: 2;
+}
+.reader-page::before {
+  background:
+    linear-gradient(90deg, transparent, rgba(236, 122, 36, .20), transparent),
+    linear-gradient(180deg, rgba(242,229,210,.55), rgba(248,237,219,.20)) !important;
+}
+.reading-flow--five {
+  background: transparent;
+}
+.reading-flow--five .read-section--chapter {
+  background: transparent !important;
+  overflow: visible;
+}
+.reading-flow--five .read-section--chapter::before {
+  opacity: .035;
+  z-index: -1;
+}
+.reading-flow--five .read-section--chapter::after {
+  opacity: .18;
+}
+.reading-flow--five .read-section--chapter > .read-grid,
+.reading-flow--five .read-section--chapter > .article-band,
+.reading-flow--five .read-section--chapter > .chapter-subsections,
+.reading-flow--five .read-section--chapter > .evidence-grid,
+.reading-flow--five .read-section--chapter > .dual-screen,
+.reading-flow--five .read-section--chapter > .record-timeline,
+.reading-flow--five .read-section--chapter > .cocoon-diagram,
+.reading-flow--five .read-section--chapter > .integrated-stack,
+.reading-flow--five .read-section--chapter > .heldback-panel,
+.reading-flow--five .read-section--chapter > .closing-panel {
+  border: 1px solid rgba(77,55,32,.12);
+  background: rgba(255, 249, 237, .52);
+  box-shadow: 0 22px 74px rgba(61,37,13,.075);
+  backdrop-filter: blur(12px) saturate(1.04);
+  -webkit-backdrop-filter: blur(12px) saturate(1.04);
+}
+.reading-flow--five .read-section--chapter > .read-grid {
+  padding: clamp(1.25rem, 3vw, 2.2rem);
+  border-radius: clamp(24px, 3.2vw, 38px);
+}
+.reading-flow--five .read-section--chapter > .article-band,
+.reading-flow--five .read-section--chapter > .chapter-subsections,
+.reading-flow--five .read-section--chapter > .evidence-grid,
+.reading-flow--five .read-section--chapter > .record-timeline,
+.reading-flow--five .read-section--chapter > .integrated-stack {
+  border-radius: clamp(20px, 3vw, 32px);
+  padding: clamp(1.1rem, 3vw, 2rem);
+}
+.boundary-strip,
+.single-card,
+.chapter-subsection,
+.dual-panel,
+.info-grid > div,
+.formal-grid > div,
+.test-metrics > div,
+.record-timeline li {
+  background-color: rgba(255, 249, 237, .54);
+  border-color: rgba(77,55,32,.12);
+  backdrop-filter: blur(9px) saturate(1.02);
+  -webkit-backdrop-filter: blur(9px) saturate(1.02);
+  box-shadow: 0 16px 46px rgba(61,37,13,.055);
+}
+.single-card { background: rgba(255,249,237,.46); }
+.boundary-strip { background: rgba(255,249,237,.58); }
+.boundary-strip--strong { background: rgba(33,25,18,.88); }
+
+/* Module 01: subtle pattern-coming-visible state. */
+#module-01 .read-grid {
+  background:
+    radial-gradient(circle at 76% 26%, rgba(236,122,36,.065), transparent 28%),
+    rgba(255,249,237,.50);
+}
+#module-01 .read-grid::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 12%;
+  bottom: 18%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(33,25,18,.10), rgba(236,122,36,.22), transparent);
+  transform: rotate(-6deg);
+  pointer-events: none;
+}
+
+/* Module 02: mechanism glass plus approved medication atmosphere panel. */
+#module-02 .read-grid {
+  background:
+    radial-gradient(circle at 82% 54%, rgba(245,178,31,.07), transparent 26%),
+    rgba(255,249,237,.48);
+}
+.medication-panel {
+  border: 1px solid rgba(255,244,222,.18) !important;
+  box-shadow: 0 34px 110px rgba(33,20,9,.25), 0 0 100px rgba(236,122,36,.12) !important;
+  backdrop-filter: blur(10px) saturate(1.04);
+  -webkit-backdrop-filter: blur(10px) saturate(1.04);
+}
+.medication-panel .boundary-strip {
+  border-color: rgba(255,244,222,.20);
+  color: rgba(255,244,222,.84);
+}
+
+/* Module 03: ADHD Lens glass state; lens, insight, no surveillance. */
+#module-03 .read-grid {
+  background:
+    radial-gradient(ellipse at 28% 50%, rgba(236,122,36,.10), transparent 32%),
+    rgba(255,249,237,.48);
+}
+#module-03 .lens-visual {
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(255,249,237,.62), transparent 34%),
+    radial-gradient(ellipse at 50% 50%, rgba(236,122,36,.14), transparent 55%),
+    rgba(255,249,237,.30);
+  box-shadow: inset 0 0 80px rgba(255,249,237,.24), 0 28px 80px rgba(61,37,13,.08);
+}
+#module-03 .lens-visual .lens-oval,
+#module-03 .lens-visual .lens-aperture {
+  border-color: rgba(236,122,36,.20);
+}
+
+/* Module 04: dual-screen field, not software or a diagnostic tool. */
+#module-04 .section-copy--center,
+#module-04 .dual-screen,
+#module-04 .record-timeline {
+  position: relative;
+}
+#module-04 .section-copy--center {
+  padding: clamp(1.1rem, 2.5vw, 1.8rem);
+  border-radius: 28px;
+  border: 1px solid rgba(77,55,32,.10);
+  background: rgba(255,249,237,.44);
+  backdrop-filter: blur(10px) saturate(1.02);
+  -webkit-backdrop-filter: blur(10px) saturate(1.02);
+  box-shadow: 0 18px 60px rgba(61,37,13,.06);
+}
+.dual-screen {
+  background:
+    linear-gradient(90deg, rgba(255,249,237,.58), rgba(255,249,237,.40) 49%, rgba(236,122,36,.08) 50%, rgba(255,249,237,.52)) !important;
+  border-radius: clamp(24px, 3.2vw, 38px);
+}
+.dual-panel { box-shadow: none; }
+.dual-bridge {
+  box-shadow: 0 0 0 9px rgba(236,122,36,.035), 0 0 46px rgba(236,122,36,.08);
+}
+
+/* Module 05: integrated practice contains the stronger glass states. */
+#module-05 .section-copy--center {
+  padding: clamp(1.1rem, 2.7vw, 2rem);
+  border-radius: 30px;
+  border: 1px solid rgba(236,122,36,.12);
+  background: rgba(255,249,237,.42);
+  backdrop-filter: blur(10px) saturate(1.02);
+  -webkit-backdrop-filter: blur(10px) saturate(1.02);
+  box-shadow: 0 18px 70px rgba(61,37,13,.055);
+}
+#module-05 .cocoon-diagram {
+  background:
+    radial-gradient(circle at 50% 49%, rgba(245,178,31,.18), transparent 24%),
+    radial-gradient(circle at 50% 50%, rgba(255,249,237,.70), transparent 48%),
+    rgba(255,249,237,.46) !important;
+  border-color: rgba(236,122,36,.18) !important;
+}
+#module-05 .integrated-stack {
+  background: rgba(255,249,237,.48) !important;
+}
+.heldback-panel {
+  background:
+    radial-gradient(circle at 48% 46%, rgba(236,122,36,.16), transparent 35%),
+    linear-gradient(135deg, rgba(27,23,18,.90), rgba(45,31,19,.82)) !important;
+  border-color: rgba(255,244,222,.14) !important;
+  color: rgba(255,244,222,.88);
+  box-shadow: 0 36px 120px rgba(18,10,6,.34) !important;
+}
+.heldback-panel .locked-card {
+  background: rgba(255,244,222,.10) !important;
+  border-color: rgba(255,244,222,.18) !important;
+  backdrop-filter: blur(18px) saturate(1.04);
+  -webkit-backdrop-filter: blur(18px) saturate(1.04);
+}
+.closing-panel {
+  background:
+    radial-gradient(circle at 82% 28%, rgba(255,249,237,.66), transparent 28%),
+    radial-gradient(circle at 72% 48%, rgba(245,178,31,.13), transparent 32%),
+    linear-gradient(135deg, rgba(255,249,237,.60), rgba(246,225,185,.54)) !important;
+  border-color: rgba(236,122,36,.13) !important;
+  box-shadow: 0 22px 90px rgba(61,37,13,.07) !important;
+}
+.closing-panel .reader-footer { color: rgba(33,25,18,.52); }
+
+/* Header and chapter navigation glass tuning. */
+.series-header {
+  background: rgba(255, 249, 237, .66) !important;
+  border-bottom-color: rgba(77,55,32,.095) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(16px) saturate(1.04);
+  -webkit-backdrop-filter: blur(16px) saturate(1.04);
+}
+.series-header.is-scrolled {
+  background: rgba(255,249,237,.78) !important;
+}
+.chapter-nav {
+  background: rgba(255, 249, 237, .58) !important;
+  border-color: rgba(77,55,32,.095) !important;
+  box-shadow: 0 12px 40px rgba(61,37,13,.035);
+  backdrop-filter: blur(14px) saturate(1.04);
+  -webkit-backdrop-filter: blur(14px) saturate(1.04);
+}
+.chapter-nav a.is-active {
+  background: rgba(255,255,255,.34) !important;
+}
+.chapter-nav a.is-active span {
+  background: rgba(236,122,36,.72) !important;
+}
+
+@media (max-width: 760px) {
+  .static-atmosphere::before { opacity: .12; }
+  .static-atmosphere::after { opacity: .20; }
+  .atmo-lens { width: 88vw; height: 42vw; }
+  .atmo-cocoon { width: 68vw; height: 82vw; }
+  .atmo-thread { left: -38vw; right: -44vw; }
+  .reading-flow--five .read-section--chapter > .read-grid,
+  .reading-flow--five .read-section--chapter > .article-band,
+  .reading-flow--five .read-section--chapter > .chapter-subsections,
+  .reading-flow--five .read-section--chapter > .evidence-grid,
+  .reading-flow--five .read-section--chapter > .dual-screen,
+  .reading-flow--five .read-section--chapter > .record-timeline,
+  .reading-flow--five .read-section--chapter > .cocoon-diagram,
+  .reading-flow--five .read-section--chapter > .integrated-stack,
+  .reading-flow--five .read-section--chapter > .heldback-panel,
+  .reading-flow--five .read-section--chapter > .closing-panel {
+    backdrop-filter: blur(8px) saturate(1.02);
+    -webkit-backdrop-filter: blur(8px) saturate(1.02);
+    box-shadow: 0 14px 46px rgba(61,37,13,.06);
+  }
+  .reading-flow--five .read-section--chapter > .read-grid {
+    padding: 1rem;
+  }
+  #module-04 .section-copy--center,
+  #module-05 .section-copy--center {
+    padding: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .static-atmosphere,
+  .static-atmosphere::before,
+  .static-atmosphere::after,
+  .atmo-thread,
+  .atmo-lens,
+  .atmo-cocoon,
+  .atmo-route {
+    transition: none !important;
+  }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .reading-flow--five .read-section--chapter > .read-grid,
+  .reading-flow--five .read-section--chapter > .article-band,
+  .reading-flow--five .read-section--chapter > .chapter-subsections,
+  .reading-flow--five .read-section--chapter > .evidence-grid,
+  .reading-flow--five .read-section--chapter > .dual-screen,
+  .reading-flow--five .read-section--chapter > .record-timeline,
+  .reading-flow--five .read-section--chapter > .cocoon-diagram,
+  .reading-flow--five .read-section--chapter > .integrated-stack,
+  .reading-flow--five .read-section--chapter > .heldback-panel,
+  .reading-flow--five .read-section--chapter > .closing-panel,
+  .series-header,
+  .chapter-nav {
+    background-color: rgba(255,249,237,.86) !important;
+  }
+}

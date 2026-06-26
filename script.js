@@ -14,6 +14,7 @@
   };
 
   const setActiveChapter = (id) => {
+    document.body.dataset.activeModule = id || '';
     chapterLinks.forEach((link) => {
       const active = link.dataset.moduleTarget === id;
       link.classList.toggle('is-active', active);
@@ -41,6 +42,7 @@
     readerPage.hidden = true;
     contentsPage.hidden = false;
     document.body.dataset.mode = 'contents';
+    document.body.dataset.activeModule = '';
     chapterLinks.forEach(link => link.classList.remove('is-active'));
     if (updateHash && location.hash !== '#contents') history.pushState({ view: 'contents' }, '', '#contents');
     requestAnimationFrame(() => {
