@@ -1,10 +1,22 @@
-# OTOS Continuity™ Interactive Education Microsite
+# OTOS Continuity Microsite — Five-Module PMOS-Style Structure
 
-Static PMOS-style education-series microsite for OTOS Continuity™.
+This build keeps the contents-first PMOS-style education-series baseline and restructures the former 14-section OTOS explainer into five substantial modules:
 
-## Current pass
+1. The proposed name and what it hides
+2. Re-reading the diagnoses
+3. A Neurologically Informed Addiction framing
+4. The Dual Screen
+5. Integrated practice
 
-This version integrates the four approved P1 visual assets only, while preserving the contents-first structure, PMOS-style reader, module order, copy, chapter navigation and restrained OTOS atmosphere.
+## What changed in this pass
+
+- Contents page now shows five PMOS-equivalent modules only.
+- Horizontal reading navigation now shows five chapter items only.
+- Former 14-section material has been folded into the five-module education structure.
+- Medication timing now sits inside Module 02.
+- NIA / ADHD Lens / PMOS analogy now sits inside Module 03.
+- The Dual Screen is now Module 04.
+- OTOS continuity, cocoon, boundaries, route advice, small governed test, hold-back and closing are now inside Module 05.
 
 ## Run locally
 
@@ -13,7 +25,7 @@ cd otos_continuity_microsite
 python3 -m http.server 8000
 ```
 
-Then open:
+Open:
 
 ```text
 http://localhost:8000
@@ -21,23 +33,16 @@ http://localhost:8000
 
 ## Structure
 
-- `index.html` — contents page plus separate reader state and P1 module markup
-- `styles.css` — PMOS-style editorial layout, OTOS atmosphere family and P1 SVG/CSS treatments
-- `script.js` — contents/reader state, hash navigation, active chapter updates and reveal effects
-- `assets/` — OTOS logo assets
+- `index.html` — content and five-module structure
+- `styles.css` — PMOS-style visual system, cocoon, lens, medication, dual screen and integrated-practice styling
+- `script.js` — contents/reader state, smooth scrolling, active chapter updates, reveal behaviour
+- `assets/` — OTOS logo asset
 
-## P1 visual assets integrated
+## Boundaries preserved
 
-- Module 04: editable SVG/HTML/CSS person-centred cocoon diagram
-- Module 06: approved medication timing atmosphere preserved and refined
-- Module 13: dark controlled-disclosure schematic behind frosted glass
-- Module 14: calm dawn/route closing visual
-
-## Notes
-
-- No copy rewrite in this pass.
-- No final photography added.
-- No extra P2/P3 images generated.
-- No new claims added.
-- No NHS, partner, pill, molecule, alcohol or stock imagery added.
-- Browser visual QA should still be done locally before deployment.
+- NIA is proposed terminology, not an official diagnosis.
+- NIA is not a formal consensus rename.
+- OTOS does not diagnose, prescribe, treat or make clinical decisions.
+- OTOS does not create a merged EPR or service-to-service data-sharing layer.
+- Comparator evidence is not presented as OTOS outcomes.
+- Public-record first-mover language remains qualified.
