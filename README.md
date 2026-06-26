@@ -1,41 +1,43 @@
-# OTOS Continuity™ Microsite — PMOS-Style Structural Reset
+# OTOS Continuity™ Microsite
 
-This build resets the microsite structure into a contents-first education series, with a separate long-scroll reading experience.
+Static PMOS-style education-series microsite for OTOS Continuity™.
 
-## Files
+## Current pass
 
-- `index.html` — contents homepage plus reading state
-- `styles.css` — simplified PMOS-style visual system
-- `script.js` — routing/state, chapter navigation, reveal effects
-- `assets/` — OTOS Continuity logo assets
+Whole-site visual / UX refinement pass before copy or final imagery.
 
-## How to run locally
+Implemented:
 
-Open `index.html` directly in a browser, or run a small local server:
+- Contents-first homepage remains the entry state.
+- Homepage title reduced and line-broken as: “The thread / the system / keeps missing.”
+- Header refined to quiet PMOS-style layout: OTOS mark left, series title centre, Contents right.
+- Reading state remains separate from the contents state.
+- Horizontal numbered chapter navigation remains clickable and active-state aware.
+- Visual language stripped back toward warm cream, charcoal type, restrained amber/thread accent.
+- Cocoon module upgraded as the central visual explanation.
+- Medication timing module upgraded as a signature visual moment using abstract thread/placeholders only.
+- Evidence, public-record, route-advice and governed-test modules given distinct formal visual treatments.
+- Hold-back module kept deliberately gated.
+- Final module moved to calmer dawn/route treatment.
+- Mobile and reduced-motion support retained.
+
+## Run locally
 
 ```bash
 cd otos_continuity_microsite
 python3 -m http.server 8000
 ```
 
-Then open:
+Open:
 
 ```text
 http://localhost:8000
 ```
 
-## How to test
+## Files
 
-1. Open the homepage. It should show the contents page first, not the explainer.
-2. Click `Begin Module 01 →`. The reading experience should open and scroll to Module 01.
-3. Click any numbered module row from the homepage. The reading experience should open at that module.
-4. Use the horizontal chapter bar on the reading page to jump between modules.
-5. Click `CONTENTS` or the logo to return to the contents homepage.
-6. Resize to mobile; the chapter bar should become horizontally scrollable.
-
-## Notes
-
-- This pass is structural and visual only.
-- Copy has been carried forward as draft content and not newly expanded.
-- No new imagery or new claims were added.
-- OTOS amber/thread visuals are restrained accents inside the reading structure.
+- `index.html`
+- `styles.css`
+- `script.js`
+- `assets/otos-continuity-logo-cropped.png`
+- `assets/otos-continuity-logo.png`
