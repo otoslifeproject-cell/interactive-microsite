@@ -4,7 +4,7 @@ Static PMOS-style education-series microsite for OTOS Continuity™.
 
 ## Current pass
 
-This version applies the background / visual atmosphere pass while preserving the contents-first structure, module order, chapter navigation and 14-module reading experience.
+This version integrates the four approved P1 visual assets only, while preserving the contents-first structure, PMOS-style reader, module order, copy, chapter navigation and restrained OTOS atmosphere.
 
 ## Run locally
 
@@ -21,24 +21,23 @@ http://localhost:8000
 
 ## Structure
 
-- `index.html` — contents page plus separate reader state
-- `styles.css` — PMOS-style editorial layout and OTOS background atmosphere family
+- `index.html` — contents page plus separate reader state and P1 module markup
+- `styles.css` — PMOS-style editorial layout, OTOS atmosphere family and P1 SVG/CSS treatments
 - `script.js` — contents/reader state, hash navigation, active chapter updates and reveal effects
 - `assets/` — OTOS logo assets
 
-## Visual atmosphere family
+## P1 visual assets integrated
 
-- Light editorial background: contents page and text-led modules
-- Cocoon diagram background: Module 04
-- Medication timing background: Module 06, preserved and refined
-- Formal proof background: Modules 09–12
-- Held-back/NDA background: Module 13
-- Closing/dawn background: Module 14
+- Module 04: editable SVG/HTML/CSS person-centred cocoon diagram
+- Module 06: approved medication timing atmosphere preserved and refined
+- Module 13: dark controlled-disclosure schematic behind frosted glass
+- Module 14: calm dawn/route closing visual
 
 ## Notes
 
 - No copy rewrite in this pass.
 - No final photography added.
+- No extra P2/P3 images generated.
 - No new claims added.
-- No NHS, partner, pill, molecule or alcohol imagery added.
-- Browser screenshot QA should still be done locally before deployment.
+- No NHS, partner, pill, molecule, alcohol or stock imagery added.
+- Browser visual QA should still be done locally before deployment.

@@ -180,6 +180,13 @@
             <p>OTOS sits externally, with consent, around the person. The person can interact with the continuity layer. Services can interact with OTOS inside agreed boundaries. Clinical data does not need to cross from one service to another for OTOS to make drift, handoffs and silence visible.</p>
           </div>
           <div class="cocoon-diagram reveal delay-1" aria-label="OTOS continuity cocoon around the person, with separate services outside">
+            <svg class="cocoon-orbit-svg" viewBox="0 0 1000 620" aria-hidden="true" focusable="false">
+              <ellipse class="orbit-boundary" cx="500" cy="318" rx="410" ry="228" />
+              <ellipse class="orbit-faint" cx="500" cy="318" rx="318" ry="178" />
+              <path class="thread-wrap thread-wrap-a" d="M310 322 C370 228 633 220 696 310 C634 399 374 415 305 335" />
+              <path class="thread-wrap thread-wrap-b" d="M360 260 C470 204 637 260 636 352 C525 412 360 367 350 294" />
+              <path class="thread-resolve" d="M182 390 C302 344 372 342 462 326 C548 310 650 292 812 225" />
+            </svg>
             <div class="cocoon-label label-person">Person</div>
             <div class="cocoon-label label-layer">OTOS Continuity Layer</div>
             <div class="cocoon-label label-services">Existing services</div>
@@ -187,8 +194,8 @@
             <div class="cocoon-label label-no-epr">No merged EPR</div>
             <div class="cocoon-label label-no-pipe">No clinical data pipe</div>
             <div class="cocoon-core-line">Not joining up the services.<br />Holding the person across them.</div>
-            <div class="cocoon-ring"></div>
-            <div class="cocoon-person">Person</div>
+            <div class="cocoon-ring" aria-hidden="true"></div>
+            <div class="cocoon-person"><span class="person-symbol" aria-hidden="true"></span><span>Person</span></div>
             <span class="outer-service os-1">ADHD Team</span><span class="outer-service os-2">CGL / CRS</span><span class="outer-service os-3">Mental Health</span><span class="outer-service os-4">Alcohol Liaison</span><span class="outer-service os-5">RCE / LAMP</span><span class="outer-service os-6">Mind / WorkWell</span>
           </div>
           <div class="boundary-strip reveal delay-2">The service stays the service. The person stops disappearing between them.</div>
@@ -300,7 +307,18 @@
         </section>
 
         <section id="module-13" class="read-section read-section--heldback" data-section>
-          <div class="blurred-schematic" aria-hidden="true"></div>
+          <div class="blurred-schematic" aria-hidden="true">
+            <svg class="obscured-map" viewBox="0 0 900 520" focusable="false">
+              <path class="obscured-thread" d="M-30 320 C170 220 280 380 430 280 C560 190 690 275 930 150" />
+              <path class="obscured-line" d="M180 125 C320 190 420 150 545 230 C660 304 725 250 810 340" />
+              <path class="obscured-line alt" d="M130 404 C250 290 355 330 470 374 C600 420 675 322 785 256" />
+              <rect x="128" y="92" width="122" height="68" rx="22" />
+              <rect x="640" y="85" width="126" height="72" rx="22" />
+              <rect x="365" y="222" width="158" height="84" rx="28" />
+              <rect x="140" y="358" width="138" height="72" rx="22" />
+              <rect x="650" y="350" width="138" height="74" rx="22" />
+            </svg>
+          </div>
           <div class="locked-card reveal">
             <p class="section-kicker">13</p>
             <h2>Enough to know this needs a serious conversation. Not enough to hand over the system.</h2>
@@ -311,7 +329,12 @@
         </section>
 
         <section id="module-14" class="read-section read-section--closing" data-section>
-          <div class="closing-thread" aria-hidden="true"></div>
+          <div class="closing-route-field" aria-hidden="true">
+            <svg class="closing-route" viewBox="0 0 1100 560" focusable="false">
+              <path d="M-80 385 C120 334 250 376 402 316 C574 248 710 244 898 160 C976 126 1042 104 1180 90" />
+              <path class="route-haze" d="M-40 430 C160 388 332 394 484 336 C666 266 795 250 1095 184" />
+            </svg>
+          </div>
           <div class="section-copy section-copy--center reveal">
             <p class="section-kicker">14</p>
             <h2>The route out is not another disconnected service. It is continuity around the person.</h2>
