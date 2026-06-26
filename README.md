@@ -59,3 +59,17 @@ Implemented states:
 - Module 05: cocoon, hold-back, and dawn-route visual states inside integrated practice.
 
 No copy changes, new claims, photography, stock imagery, logos, pills, molecules, dashboards, or service-to-service network visuals were added.
+
+## Static Image Depth + Stat Motion Pass
+
+This pass keeps the five-module PMOS-style education-series structure and deepens the visual atmosphere behind the scrolling glass reader.
+
+Implemented:
+- Persistent fixed/sticky abstract image-depth layer behind the reading view.
+- Module-specific atmosphere states for Module 01 pattern linework, Module 02 records/medication atmosphere, Module 03 ADHD Lens, Module 04 Dual Screen and Module 05 cocoon/hold-back/close.
+- Deliberate scrolling glass panels over the static visual field.
+- Subtle Jump-style stat settle animation for evidence and test numbers.
+- Progressive enhancement so stats remain visible without JavaScript.
+- Reduced-motion support so stats show final values instantly and atmosphere motion is disabled.
+
+No module-order changes, copy rewrites, new claims, photography, pills, molecules, logos, dashboards or product architecture were added.

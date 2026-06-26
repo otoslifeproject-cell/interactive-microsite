@@ -1,4 +1,5 @@
 (() => {
+  document.documentElement.classList.add('has-js');
   const header = document.querySelector('[data-header]');
   const contentsPage = document.querySelector('#contents');
   const readerPage = document.querySelector('#reader');
@@ -7,10 +8,24 @@
   const moduleLinks = [...document.querySelectorAll('[data-module-target]')];
   const homeLinks = [...document.querySelectorAll('[data-home-link]')];
   const revealEls = [...document.querySelectorAll('.reveal')];
+  const statEls = [...document.querySelectorAll('.stat-settle')];
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let atmosphereTicking = false;
 
   const setHeaderState = () => {
     header?.classList.toggle('is-scrolled', window.scrollY > 10);
+  };
+
+  const setAtmosphereShift = () => {
+    const shift = Math.min(120, Math.max(0, window.scrollY * 0.035));
+    document.documentElement.style.setProperty('--atmo-shift', `${shift.toFixed(2)}px`);
+    atmosphereTicking = false;
+  };
+
+  const requestAtmosphereShift = () => {
+    if (prefersReducedMotion || atmosphereTicking) return;
+    atmosphereTicking = true;
+    requestAnimationFrame(setAtmosphereShift);
   };
 
   const setActiveChapter = (id) => {
@@ -46,6 +61,7 @@
     chapterLinks.forEach(link => link.classList.remove('is-active'));
     if (updateHash && location.hash !== '#contents') history.pushState({ view: 'contents' }, '', '#contents');
     requestAnimationFrame(() => {
+  document.documentElement.classList.add('has-js');
       contentsPage.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
     });
   };
@@ -85,11 +101,16 @@
     else if (id === 'contents') showContents(false);
   });
 
-  window.addEventListener('scroll', setHeaderState, { passive: true });
+  window.addEventListener('scroll', () => {
+    setHeaderState();
+    requestAtmosphereShift();
+  }, { passive: true });
   setHeaderState();
+  setAtmosphereShift();
 
   if (prefersReducedMotion) {
     revealEls.forEach(el => el.classList.add('is-visible'));
+    statEls.forEach(el => el.classList.add('is-settled'));
   } else {
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -100,6 +121,16 @@
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' });
     revealEls.forEach(el => revealObserver.observe(el));
+
+    const statObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-settled');
+        statObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.35, rootMargin: '0px 0px -10% 0px' });
+    statEls.forEach(el => statObserver.observe(el));
+
   }
 
   const sectionObserver = new IntersectionObserver((entries) => {
