@@ -1,28 +1,10 @@
-# OTOS Continuity™ Microsite
+# OTOS Continuity™ Interactive Education Microsite
 
 Static PMOS-style education-series microsite for OTOS Continuity™.
 
-## Current status
+## Current pass
 
-Finish pass completed before copy/image work.
-
-This build preserves:
-
-- contents-first opening
-- OTOS header left / series title centre / Contents right
-- numbered contents list with read times and arrows
-- Begin Module 01 CTA
-- separate reader state
-- horizontal numbered chapter navigation
-- 14-module PMOS-style reading structure
-- restrained OTOS amber/thread accents
-
-## Files
-
-- `index.html` — full site markup and module content
-- `styles.css` — PMOS-style editorial visual system and finish-pass refinements
-- `script.js` — contents/reader state, smooth scrolling, active chapter state and reveal behaviour
-- `assets/` — OTOS logo asset
+This version applies the background / visual atmosphere pass while preserving the contents-first structure, module order, chapter navigation and 14-module reading experience.
 
 ## Run locally
 
@@ -37,17 +19,26 @@ Then open:
 http://localhost:8000
 ```
 
-## Behaviour to test
+## Structure
 
-- `/` opens to the contents-first page.
-- `#contents` returns to contents.
-- Begin Module 01 enters the reading state.
-- Each contents row opens the corresponding module.
-- Chapter nav scrolls horizontally on small screens.
-- Active chapter updates on scroll.
-- Sticky header and chapter nav do not cover section headings.
-- Reduced-motion support remains enabled via CSS/JS.
+- `index.html` — contents page plus separate reader state
+- `styles.css` — PMOS-style editorial layout and OTOS background atmosphere family
+- `script.js` — contents/reader state, hash navigation, active chapter updates and reveal effects
+- `assets/` — OTOS logo assets
+
+## Visual atmosphere family
+
+- Light editorial background: contents page and text-led modules
+- Cocoon diagram background: Module 04
+- Medication timing background: Module 06, preserved and refined
+- Formal proof background: Modules 09–12
+- Held-back/NDA background: Module 13
+- Closing/dawn background: Module 14
 
 ## Notes
 
-No copy rewrite, final photography, source cleanup, new claims, partner logos, NHS logos or product mechanics were added in this pass.
+- No copy rewrite in this pass.
+- No final photography added.
+- No new claims added.
+- No NHS, partner, pill, molecule or alcohol imagery added.
+- Browser screenshot QA should still be done locally before deployment.
