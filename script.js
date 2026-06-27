@@ -1,3 +1,4 @@
+/* OTOS_VISIBLE_DEPTH_STAT_MOTION_V2_20260627 */
 (() => {
   document.documentElement.classList.add('has-js');
   const header = document.querySelector('[data-header]');
@@ -33,6 +34,67 @@
     return `${formatted}${suffix}`;
   };
 
+  const animateNumericStat = (el, finalRaw) => {
+    const suffix = finalRaw.endsWith('%') ? '%' : '';
+    const numericRaw = suffix ? finalRaw.slice(0, -1) : finalRaw;
+    const numeric = Number.parseFloat(numericRaw.replace(/,/g, ''));
+    const isNumeric = Number.isFinite(numeric) && /^\d+(\.\d+)?%?$/.test(finalRaw);
+
+    if (!isNumeric) return false;
+
+    const decimals = (numericRaw.split('.')[1] || '').length;
+    const startValue = 0;
+    const duration = numeric >= 50 ? 1450 : 1250;
+    const startTime = performance.now();
+    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+
+    el.classList.add('is-animating', 'is-counting');
+    const parentCard = el.closest('article, div, li');
+    parentCard?.classList.add('stat-card-live');
+
+    const frame = (now) => {
+      const elapsed = Math.min(1, (now - startTime) / duration);
+      const eased = easeOutCubic(elapsed);
+      let value = startValue + (numeric - startValue) * eased;
+      if (elapsed >= 0.82 && elapsed < 0.92) value = numeric + (numeric * 0.018 * (1 - (elapsed - 0.82) / 0.10));
+      if (elapsed >= 1) value = numeric;
+      el.textContent = `${value.toFixed(decimals)}${suffix}`;
+      if (elapsed < 1) {
+        requestAnimationFrame(frame);
+      } else {
+        el.textContent = finalRaw;
+        el.classList.remove('is-counting', 'is-animating');
+        el.classList.add('is-settled');
+        window.setTimeout(() => parentCard?.classList.remove('stat-card-live'), 1150);
+      }
+    };
+    requestAnimationFrame(frame);
+    return true;
+  };
+
+  const animateTextStat = (el, finalRaw) => {
+    const parentCard = el.closest('article, div, li');
+    parentCard?.classList.add('stat-card-live');
+    el.classList.add('is-animating', 'is-counting');
+    if (finalRaw === 'C&P') {
+      el.textContent = 'C';
+      window.setTimeout(() => { el.textContent = 'C&'; }, 320);
+      window.setTimeout(() => { el.textContent = 'C&P'; }, 650);
+      window.setTimeout(() => {
+        el.classList.remove('is-counting', 'is-animating');
+        el.classList.add('is-settled');
+        parentCard?.classList.remove('stat-card-live');
+      }, 1050);
+      return;
+    }
+    el.textContent = finalRaw;
+    window.setTimeout(() => {
+      el.classList.remove('is-counting', 'is-animating');
+      el.classList.add('is-settled');
+      parentCard?.classList.remove('stat-card-live');
+    }, 900);
+  };
+
   const settleStat = (el) => {
     if (!el || el.dataset.statAnimated === 'true') return;
     const finalRaw = (el.dataset.stat || el.textContent || '').trim();
@@ -45,34 +107,7 @@
       return;
     }
 
-    const suffix = finalRaw.endsWith('%') ? '%' : '';
-    const numericRaw = suffix ? finalRaw.slice(0, -1) : finalRaw;
-    const numeric = Number.parseFloat(numericRaw.replace(/,/g, ''));
-    const isNumeric = Number.isFinite(numeric) && /^\d+(\.\d+)?%?$/.test(finalRaw);
-
-    el.classList.add('is-counting');
-
-    if (isNumeric) {
-      const decimals = (numericRaw.split('.')[1] || '').length;
-      const start = numeric >= 20 ? numeric * 0.92 : Math.max(0, numeric - 2);
-      const overshoot = numeric >= 20 ? numeric * 1.035 : numeric + 1;
-      el.textContent = formatNumericStat(start, decimals, suffix);
-      window.setTimeout(() => { el.textContent = formatNumericStat(overshoot, decimals, suffix); }, 260);
-      window.setTimeout(() => {
-        el.textContent = finalRaw;
-        el.classList.remove('is-counting');
-        el.classList.add('is-settled');
-      }, 650);
-      return;
-    }
-
-    // Short non-numeric labels such as C&P get a tiny, non-slot-machine settle.
-    if (finalRaw.includes('&')) el.textContent = finalRaw.replace('&', '·');
-    window.setTimeout(() => {
-      el.textContent = finalRaw;
-      el.classList.remove('is-counting');
-      el.classList.add('is-settled');
-    }, 420);
+    if (!animateNumericStat(el, finalRaw)) animateTextStat(el, finalRaw);
   };
 
   const setActiveChapter = (id) => {
