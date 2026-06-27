@@ -28,6 +28,53 @@
     requestAnimationFrame(setAtmosphereShift);
   };
 
+  const formatNumericStat = (value, decimals, suffix) => {
+    const formatted = Number(value).toFixed(decimals);
+    return `${formatted}${suffix}`;
+  };
+
+  const settleStat = (el) => {
+    if (!el || el.dataset.statAnimated === 'true') return;
+    const finalRaw = (el.dataset.stat || el.textContent || '').trim();
+    el.dataset.statAnimated = 'true';
+    el.setAttribute('aria-label', finalRaw);
+
+    if (prefersReducedMotion) {
+      el.textContent = finalRaw;
+      el.classList.add('is-settled');
+      return;
+    }
+
+    const suffix = finalRaw.endsWith('%') ? '%' : '';
+    const numericRaw = suffix ? finalRaw.slice(0, -1) : finalRaw;
+    const numeric = Number.parseFloat(numericRaw.replace(/,/g, ''));
+    const isNumeric = Number.isFinite(numeric) && /^\d+(\.\d+)?%?$/.test(finalRaw);
+
+    el.classList.add('is-counting');
+
+    if (isNumeric) {
+      const decimals = (numericRaw.split('.')[1] || '').length;
+      const start = numeric >= 20 ? numeric * 0.92 : Math.max(0, numeric - 2);
+      const overshoot = numeric >= 20 ? numeric * 1.035 : numeric + 1;
+      el.textContent = formatNumericStat(start, decimals, suffix);
+      window.setTimeout(() => { el.textContent = formatNumericStat(overshoot, decimals, suffix); }, 260);
+      window.setTimeout(() => {
+        el.textContent = finalRaw;
+        el.classList.remove('is-counting');
+        el.classList.add('is-settled');
+      }, 650);
+      return;
+    }
+
+    // Short non-numeric labels such as C&P get a tiny, non-slot-machine settle.
+    if (finalRaw.includes('&')) el.textContent = finalRaw.replace('&', '·');
+    window.setTimeout(() => {
+      el.textContent = finalRaw;
+      el.classList.remove('is-counting');
+      el.classList.add('is-settled');
+    }, 420);
+  };
+
   const setActiveChapter = (id) => {
     document.body.dataset.activeModule = id || '';
     chapterLinks.forEach((link) => {
@@ -110,7 +157,7 @@
 
   if (prefersReducedMotion) {
     revealEls.forEach(el => el.classList.add('is-visible'));
-    statEls.forEach(el => el.classList.add('is-settled'));
+    statEls.forEach(el => settleStat(el));
   } else {
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -125,10 +172,10 @@
     const statObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-settled');
+        settleStat(entry.target);
         statObserver.unobserve(entry.target);
       });
-    }, { threshold: 0.35, rootMargin: '0px 0px -10% 0px' });
+    }, { threshold: 0.18, rootMargin: '0px 0px -4% 0px' });
     statEls.forEach(el => statObserver.observe(el));
 
   }
