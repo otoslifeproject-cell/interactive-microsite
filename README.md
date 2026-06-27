@@ -1,14 +1,14 @@
-# OTOS Microsite — Visible Static Depth + Rolling Stats V2
+# OTOS Microsite — Jump-style stat reel + visible glass V3
 
-Build marker: `OTOS_VISIBLE_DEPTH_STAT_MOTION_V2_20260627`
+Build marker: `OTOS_JUMP_STYLE_STATS_GLASS_V3_20260627`
 
-This version intentionally makes the previously subtle static image-depth, glass panels and stat animation visibly obvious in production while preserving the five-module PMOS-style structure.
+This build keeps the five-module PMOS-style structure and updates visual/motion only.
 
-Deploy the root files directly: `index.html`, `styles.css`, `script.js`, `assets/`, `README.md`, `VERSION.txt`.
+Updated:
+- Rebuilt stats as rolling reel/odometer columns.
+- 61.3%, 50, 12 and C&P now roll through characters and settle into final value.
+- Stronger fixed static atmosphere behind scrolling content.
+- Stronger glass treatment on reading modules/cards.
+- No canary/deploy-test badge.
 
-Checks completed:
-- `node --check script.js` passed.
-- CSS/HTML markers present.
-- No deploy canary/test badge included.
-
-Search live source for `OTOS_VISIBLE_DEPTH_STAT_MOTION_V2_20260627` after deploy.
+Upload the root files directly to GitHub: `index.html`, `styles.css`, `script.js`, `README.md`, `VERSION.txt`, and `assets/`.

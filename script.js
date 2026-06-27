@@ -1,4 +1,6 @@
-/* OTOS_VISIBLE_DEPTH_STAT_MOTION_V2_20260627 */
+/* OTOS_JUMP_STYLE_STATS_GLASS_V3_20260627
+   Odometer/reel stat motion rebuilt to emulate the Jump-style roll-and-settle feel.
+   No proprietary code copied. */
 (() => {
   document.documentElement.classList.add('has-js');
   const header = document.querySelector('[data-header]');
@@ -18,7 +20,7 @@
   };
 
   const setAtmosphereShift = () => {
-    const shift = Math.min(120, Math.max(0, window.scrollY * 0.035));
+    const shift = Math.min(160, Math.max(0, window.scrollY * 0.055));
     document.documentElement.style.setProperty('--atmo-shift', `${shift.toFixed(2)}px`);
     atmosphereTicking = false;
   };
@@ -29,77 +31,81 @@
     requestAnimationFrame(setAtmosphereShift);
   };
 
-  const formatNumericStat = (value, decimals, suffix) => {
-    const formatted = Number(value).toFixed(decimals);
-    return `${formatted}${suffix}`;
-  };
+  const isDigit = (char) => /\d/.test(char);
+  const textPool = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const digitPool = '01234567890123456789';
 
-  const animateNumericStat = (el, finalRaw) => {
-    const suffix = finalRaw.endsWith('%') ? '%' : '';
-    const numericRaw = suffix ? finalRaw.slice(0, -1) : finalRaw;
-    const numeric = Number.parseFloat(numericRaw.replace(/,/g, ''));
-    const isNumeric = Number.isFinite(numeric) && /^\d+(\.\d+)?%?$/.test(finalRaw);
+  const randomFrom = (pool, offset) => pool[(offset * 7 + 3) % pool.length];
 
-    if (!isNumeric) return false;
-
-    const decimals = (numericRaw.split('.')[1] || '').length;
-    const startValue = 0;
-    const duration = numeric >= 50 ? 1450 : 1250;
-    const startTime = performance.now();
-    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
-
-    el.classList.add('is-animating', 'is-counting');
-    const parentCard = el.closest('article, div, li');
-    parentCard?.classList.add('stat-card-live');
-
-    const frame = (now) => {
-      const elapsed = Math.min(1, (now - startTime) / duration);
-      const eased = easeOutCubic(elapsed);
-      let value = startValue + (numeric - startValue) * eased;
-      if (elapsed >= 0.82 && elapsed < 0.92) value = numeric + (numeric * 0.018 * (1 - (elapsed - 0.82) / 0.10));
-      if (elapsed >= 1) value = numeric;
-      el.textContent = `${value.toFixed(decimals)}${suffix}`;
-      if (elapsed < 1) {
-        requestAnimationFrame(frame);
-      } else {
-        el.textContent = finalRaw;
-        el.classList.remove('is-counting', 'is-animating');
-        el.classList.add('is-settled');
-        window.setTimeout(() => parentCard?.classList.remove('stat-card-live'), 1150);
-      }
-    };
-    requestAnimationFrame(frame);
-    return true;
-  };
-
-  const animateTextStat = (el, finalRaw) => {
-    const parentCard = el.closest('article, div, li');
-    parentCard?.classList.add('stat-card-live');
-    el.classList.add('is-animating', 'is-counting');
-    if (finalRaw === 'C&P') {
-      el.textContent = 'C';
-      window.setTimeout(() => { el.textContent = 'C&'; }, 320);
-      window.setTimeout(() => { el.textContent = 'C&P'; }, 650);
-      window.setTimeout(() => {
-        el.classList.remove('is-counting', 'is-animating');
-        el.classList.add('is-settled');
-        parentCard?.classList.remove('stat-card-live');
-      }, 1050);
-      return;
+  const buildReelSequence = (char, index) => {
+    if (isDigit(char)) {
+      const final = Number(char);
+      const start = (final + 5 + index) % 10;
+      const seq = [];
+      for (let i = 0; i < 18; i += 1) seq.push(String((start + i) % 10));
+      seq.push(String(final));
+      return seq;
     }
-    el.textContent = finalRaw;
-    window.setTimeout(() => {
-      el.classList.remove('is-counting', 'is-animating');
-      el.classList.add('is-settled');
-      parentCard?.classList.remove('stat-card-live');
-    }, 900);
+    if (/[A-Z]/i.test(char)) {
+      const upper = char.toUpperCase();
+      const seq = [];
+      const start = (upper.charCodeAt(0) + index * 5) % textPool.length;
+      for (let i = 0; i < 14; i += 1) seq.push(randomFrom(textPool, start + i));
+      seq.push(char);
+      return seq;
+    }
+    if (char === '&') return ['+', '/', '×', '·', '&'];
+    if (char === '%') return ['+', '•', 'º', '%'];
+    return [char];
   };
 
-  const settleStat = (el) => {
+  const createReel = (char, index) => {
+    const sequence = buildReelSequence(char, index);
+    const viewport = document.createElement('span');
+    viewport.className = `stat-reel-window${isDigit(char) ? ' is-digit' : ' is-symbol'}`;
+    viewport.style.setProperty('--col-index', index);
+
+    const strip = document.createElement('span');
+    strip.className = 'stat-reel-strip';
+    strip.style.setProperty('--steps', Math.max(0, sequence.length - 1));
+    sequence.forEach((item) => {
+      const cell = document.createElement('span');
+      cell.className = 'stat-reel-cell';
+      cell.textContent = item;
+      strip.appendChild(cell);
+    });
+    viewport.appendChild(strip);
+    return { viewport, strip, steps: sequence.length - 1, char };
+  };
+
+  const prepareReelStat = (el) => {
+    if (el.dataset.reelPrepared === 'true') return;
+    const finalRaw = (el.dataset.stat || el.textContent || '').trim();
+    el.dataset.finalStat = finalRaw;
+    el.dataset.reelPrepared = 'true';
+    el.setAttribute('aria-label', finalRaw);
+    el.textContent = '';
+
+    const group = document.createElement('span');
+    group.className = 'stat-reel-group';
+    group.setAttribute('aria-hidden', 'true');
+    const reels = [...finalRaw].map((char, index) => {
+      const reel = createReel(char, index);
+      group.appendChild(reel.viewport);
+      return reel;
+    });
+    const sr = document.createElement('span');
+    sr.className = 'sr-only';
+    sr.textContent = finalRaw;
+    el.append(group, sr);
+    el._otosReels = reels;
+  };
+
+  const runReelStat = (el) => {
     if (!el || el.dataset.statAnimated === 'true') return;
     const finalRaw = (el.dataset.stat || el.textContent || '').trim();
+    if (!finalRaw) return;
     el.dataset.statAnimated = 'true';
-    el.setAttribute('aria-label', finalRaw);
 
     if (prefersReducedMotion) {
       el.textContent = finalRaw;
@@ -107,8 +113,42 @@
       return;
     }
 
-    if (!animateNumericStat(el, finalRaw)) animateTextStat(el, finalRaw);
+    prepareReelStat(el);
+    const reels = el._otosReels || [];
+    const parentCard = el.closest('article, .test-metrics div, .metric-card, .chapter-subsection, div');
+    parentCard?.classList.add('stat-card-live');
+    el.classList.remove('is-settled');
+    el.classList.add('is-rolling');
+
+    reels.forEach((reel, index) => {
+      const duration = 1120 + index * 105;
+      const delay = index * 72;
+      const distance = `calc(var(--steps) * -1em)`;
+      reel.strip.style.transition = 'none';
+      reel.strip.style.transform = 'translate3d(0, 0, 0)';
+      reel.viewport.classList.remove('is-settled');
+      // Force layout so the reset is visible before the transition starts.
+      void reel.strip.offsetHeight;
+      window.setTimeout(() => {
+        reel.viewport.classList.add('is-moving');
+        reel.strip.style.transition = `transform ${duration}ms cubic-bezier(.12,.78,.17,1.02)`;
+        reel.strip.style.transform = `translate3d(0, ${distance}, 0)`;
+      }, delay);
+      window.setTimeout(() => {
+        reel.viewport.classList.remove('is-moving');
+        reel.viewport.classList.add('is-settled');
+      }, delay + duration + 40);
+    });
+
+    const total = 1320 + reels.length * 125;
+    window.setTimeout(() => {
+      el.classList.remove('is-rolling');
+      el.classList.add('is-settled');
+      parentCard?.classList.remove('stat-card-live');
+    }, total);
   };
+
+  statEls.forEach(prepareReelStat);
 
   const setActiveChapter = (id) => {
     document.body.dataset.activeModule = id || '';
@@ -129,7 +169,7 @@
     if (!target) return;
     const headerH = header?.offsetHeight || 0;
     const chapterH = document.querySelector('.chapter-nav')?.offsetHeight || 0;
-    const top = window.scrollY + target.getBoundingClientRect().top - headerH - chapterH - 18;
+    const top = window.scrollY + target.getBoundingClientRect().top - headerH - chapterH - 28;
     window.scrollTo({ top: Math.max(0, top), behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     setActiveChapter(id);
     if (updateHash && location.hash !== `#${id}`) history.pushState({ view: 'reader', id }, '', `#${id}`);
@@ -143,7 +183,6 @@
     chapterLinks.forEach(link => link.classList.remove('is-active'));
     if (updateHash && location.hash !== '#contents') history.pushState({ view: 'contents' }, '', '#contents');
     requestAnimationFrame(() => {
-  document.documentElement.classList.add('has-js');
       contentsPage.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
     });
   };
@@ -192,7 +231,10 @@
 
   if (prefersReducedMotion) {
     revealEls.forEach(el => el.classList.add('is-visible'));
-    statEls.forEach(el => settleStat(el));
+    statEls.forEach((el) => {
+      el.textContent = el.dataset.finalStat || el.dataset.stat || el.textContent;
+      el.classList.add('is-settled');
+    });
   } else {
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -207,12 +249,11 @@
     const statObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        settleStat(entry.target);
+        runReelStat(entry.target);
         statObserver.unobserve(entry.target);
       });
-    }, { threshold: 0.18, rootMargin: '0px 0px -4% 0px' });
+    }, { threshold: 0.42, rootMargin: '0px 0px -8% 0px' });
     statEls.forEach(el => statObserver.observe(el));
-
   }
 
   const sectionObserver = new IntersectionObserver((entries) => {

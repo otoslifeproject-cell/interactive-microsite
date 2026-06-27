@@ -3032,3 +3032,243 @@ body[data-mode="reader"][data-active-module="module-05"] .atmo-route { opacity: 
   }
   .stat-card-live::after { display: none !important; }
 }
+
+/* --------------------------------------------------------------------------
+   OTOS_JUMP_STYLE_STATS_GLASS_V3_20260627
+   Rebuilt rolling-reel stat motion + visibly stronger static image depth.
+   This recreates the Jump-style feel without copying proprietary code.
+   -------------------------------------------------------------------------- */
+:root {
+  --otos-v3-glass: rgba(255, 250, 240, .50);
+  --otos-v3-glass-strong: rgba(255, 250, 240, .62);
+  --otos-v3-border: rgba(58, 40, 22, .17);
+  --otos-v3-amber: #ec7a24;
+}
+
+/* Make the fixed background unmistakably present but still premium/editorial. */
+.static-atmosphere {
+  background:
+    radial-gradient(circle at 11% 13%, rgba(255,255,255,.86), transparent 23%),
+    radial-gradient(ellipse at 84% 20%, rgba(236,122,36,.24), transparent 35%),
+    radial-gradient(ellipse at 20% 76%, rgba(64,42,21,.15), transparent 42%),
+    radial-gradient(ellipse at 73% 84%, rgba(245,178,31,.18), transparent 39%),
+    linear-gradient(180deg, #f9edda 0%, #ead0a7 48%, #f6e2c6 100%) !important;
+}
+.static-atmosphere::before {
+  opacity: .68 !important;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900'%3E%3Cg fill='none' stroke-linecap='round'%3E%3Cpath d='M-130 617 C184 408 350 704 614 503 C873 306 1018 463 1725 235' stroke='%23ec7a24' stroke-opacity='.42' stroke-width='3.6'/%3E%3Cpath d='M-70 710 C220 600 500 690 750 555 C1050 400 1210 480 1710 360' stroke='%23f5b21f' stroke-opacity='.25' stroke-width='2.4'/%3E%3Cpath d='M-140 280 C190 188 350 362 590 276 C860 180 1040 270 1715 118' stroke='%23211912' stroke-opacity='.18' stroke-width='1.2'/%3E%3Cpath d='M100 130 C280 260 460 82 650 202 C814 306 970 132 1170 222' stroke='%23211912' stroke-opacity='.105' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E"),
+    radial-gradient(circle at 2px 2px, rgba(32,24,17,.18) 1px, transparent 1.8px),
+    repeating-linear-gradient(112deg, transparent 0 24px, rgba(33,25,18,.075) 25px 26px, transparent 27px 62px) !important;
+  background-size: cover, 32px 32px, 100% 100% !important;
+  transform: translate3d(0, calc(var(--atmo-shift, 0px) * -0.18), 0) rotate(-.35deg) scale(1.04) !important;
+}
+.static-atmosphere::after {
+  opacity: .66 !important;
+  background:
+    radial-gradient(ellipse at 51% 43%, rgba(255,249,237,.44), transparent 17%),
+    radial-gradient(ellipse at 50% 45%, rgba(236,122,36,.22), transparent 33%),
+    radial-gradient(ellipse at 50% 45%, transparent 38%, rgba(236,122,36,.19) 40%, transparent 43%),
+    linear-gradient(90deg, transparent 0 33%, rgba(255,249,237,.22) 48%, rgba(236,122,36,.14) 52%, transparent 69%) !important;
+  transform: translate3d(0, calc(var(--atmo-shift, 0px) * -0.12), 0) !important;
+}
+.static-atmosphere .atmo-image { opacity: .50 !important; }
+.atmo-paper-form { opacity: .44 !important; }
+.atmo-line-field { opacity: .42 !important; }
+.atmo-dual-field { opacity: .26 !important; }
+.atmo-thread-a { opacity: .66 !important; height: 3px !important; filter: drop-shadow(0 0 12px rgba(236,122,36,.22)); }
+.atmo-thread-b { opacity: .34 !important; }
+.atmo-lens { opacity: .28 !important; }
+.atmo-cocoon { opacity: .24 !important; }
+.atmo-route { opacity: .28 !important; }
+body[data-mode="reader"][data-active-module="module-01"] .atmo-line-field { opacity: .62 !important; }
+body[data-mode="reader"][data-active-module="module-02"] .atmo-paper-form { opacity: .54 !important; }
+body[data-mode="reader"][data-active-module="module-02"] .atmo-thread-a { opacity: .78 !important; }
+body[data-mode="reader"][data-active-module="module-03"] .atmo-lens { opacity: .62 !important; }
+body[data-mode="reader"][data-active-module="module-04"] .atmo-dual-field { opacity: .48 !important; }
+body[data-mode="reader"][data-active-module="module-05"] .atmo-cocoon { opacity: .62 !important; }
+body[data-mode="reader"][data-active-module="module-05"] .atmo-route { opacity: .52 !important; }
+
+/* Glass should be visible: content floats over the fixed atmosphere. */
+.reading-flow--five .read-section--chapter > .read-grid,
+.reading-flow--five .read-section--chapter > .article-band,
+.reading-flow--five .read-section--chapter > .chapter-subsections,
+.reading-flow--five .read-section--chapter > .evidence-grid,
+.reading-flow--five .read-section--chapter > .dual-screen,
+.reading-flow--five .read-section--chapter > .record-timeline,
+.reading-flow--five .read-section--chapter > .cocoon-diagram,
+.reading-flow--five .read-section--chapter > .integrated-stack,
+.reading-flow--five .read-section--chapter > .heldback-panel,
+.reading-flow--five .read-section--chapter > .closing-panel {
+  background: linear-gradient(135deg, rgba(255,251,243,.66), rgba(255,245,228,.42)) !important;
+  border: 1px solid var(--otos-v3-border) !important;
+  box-shadow:
+    0 38px 120px rgba(72,45,17,.14),
+    0 2px 0 rgba(255,255,255,.34) inset,
+    0 -1px 0 rgba(77,55,32,.035) inset !important;
+  backdrop-filter: blur(16px) saturate(1.08) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.08) !important;
+}
+.chapter-subsection,
+.single-card,
+.boundary-strip,
+.formal-grid div,
+.info-grid div,
+.test-metrics div,
+.evidence-grid article,
+.dual-panel,
+.record-timeline li {
+  background: rgba(255, 250, 240, .60) !important;
+  border-color: rgba(63, 43, 21, .16) !important;
+  backdrop-filter: blur(9px) saturate(1.04) !important;
+  -webkit-backdrop-filter: blur(9px) saturate(1.04) !important;
+}
+.heldback-panel .locked-card {
+  background: rgba(255, 244, 222, .16) !important;
+  backdrop-filter: blur(22px) saturate(1.1) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(1.1) !important;
+}
+
+/* Jump-style rolling reels. The JS replaces plain text with accessible columns. */
+.stat-settle {
+  display: inline-flex !important;
+  align-items: baseline;
+  justify-content: flex-start;
+  min-height: 1.02em;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--otos-v3-amber) !important;
+  font-variant-numeric: tabular-nums lining-nums;
+  opacity: 1 !important;
+  transform: none !important;
+  overflow: visible;
+  vertical-align: -.03em;
+  text-shadow: 0 0 0 rgba(236,122,36,0);
+}
+.stat-reel-group {
+  display: inline-flex;
+  align-items: baseline;
+  gap: .012em;
+  height: 1em;
+  line-height: 1;
+  overflow: visible;
+}
+.stat-reel-window {
+  display: inline-block;
+  position: relative;
+  height: 1em;
+  line-height: 1;
+  overflow: hidden;
+  text-align: center;
+  vertical-align: baseline;
+  min-width: .56em;
+  color: currentColor;
+  transform: translateZ(0);
+}
+.stat-reel-window.is-symbol { min-width: .34em; }
+.stat-reel-window.is-digit { min-width: .57em; }
+.stat-reel-strip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: auto;
+  line-height: 1;
+  transform: translate3d(0,0,0);
+  will-change: transform;
+}
+.stat-reel-cell {
+  display: block;
+  height: 1em;
+  line-height: 1;
+  font: inherit;
+  letter-spacing: inherit;
+}
+.stat-settle.is-rolling {
+  filter: drop-shadow(0 10px 20px rgba(236,122,36,.16));
+}
+.stat-settle.is-rolling .stat-reel-window::before,
+.stat-settle.is-rolling .stat-reel-window::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: .25em;
+  z-index: 2;
+  pointer-events: none;
+}
+.stat-settle.is-rolling .stat-reel-window::before {
+  top: 0;
+  background: linear-gradient(to bottom, rgba(255,250,240,.64), transparent);
+}
+.stat-settle.is-rolling .stat-reel-window::after {
+  bottom: 0;
+  background: linear-gradient(to top, rgba(255,250,240,.64), transparent);
+}
+.stat-reel-window.is-moving .stat-reel-strip {
+  filter: blur(.35px);
+}
+.stat-reel-window.is-settled .stat-reel-strip {
+  filter: blur(0);
+}
+.stat-settle.is-settled {
+  color: var(--otos-v3-amber) !important;
+  animation: otosV3FinalLock 760ms cubic-bezier(.14,.9,.2,1.08) both;
+  text-shadow: 0 0 22px rgba(236,122,36,.12) !important;
+}
+@keyframes otosV3FinalLock {
+  0% { transform: translateY(0) scale(1); }
+  38% { transform: translateY(-.08em) scale(1.035); }
+  62% { transform: translateY(.035em) scale(.992); }
+  100% { transform: translateY(0) scale(1); }
+}
+.test-metrics div.stat-card-live,
+.evidence-grid article.stat-card-live,
+.stat-card-live {
+  animation: otosV3CardWake 1450ms cubic-bezier(.16,.84,.22,1) both;
+  border-color: rgba(236,122,36,.30) !important;
+}
+@keyframes otosV3CardWake {
+  0% { box-shadow: 0 0 0 rgba(236,122,36,0), 0 12px 34px rgba(72,45,17,.06); }
+  38% { box-shadow: 0 0 0 1px rgba(236,122,36,.24), 0 28px 80px rgba(236,122,36,.18); }
+  100% { box-shadow: 0 0 0 rgba(236,122,36,0), 0 18px 58px rgba(72,45,17,.10); }
+}
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .stat-settle,
+  .stat-settle.is-settled,
+  .stat-reel-strip,
+  .stat-card-live {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
+@media (max-width: 760px) {
+  .static-atmosphere::before { opacity: .46 !important; }
+  .static-atmosphere::after { opacity: .48 !important; }
+  .static-atmosphere .atmo-image { opacity: .34 !important; }
+  .reading-flow--five .read-section--chapter > .read-grid,
+  .reading-flow--five .read-section--chapter > .article-band,
+  .reading-flow--five .read-section--chapter > .chapter-subsections,
+  .reading-flow--five .read-section--chapter > .evidence-grid,
+  .reading-flow--five .read-section--chapter > .dual-screen,
+  .reading-flow--five .read-section--chapter > .record-timeline,
+  .reading-flow--five .read-section--chapter > .cocoon-diagram,
+  .reading-flow--five .read-section--chapter > .integrated-stack,
+  .reading-flow--five .read-section--chapter > .heldback-panel,
+  .reading-flow--five .read-section--chapter > .closing-panel {
+    backdrop-filter: blur(8px) saturate(1.03) !important;
+    -webkit-backdrop-filter: blur(8px) saturate(1.03) !important;
+  }
+}
